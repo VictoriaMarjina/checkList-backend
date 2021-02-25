@@ -25,7 +25,7 @@ class App {
     }
 
     onGetUsers = async (req, res) => {
-        const data;
+        const data ='';
         try{
             data = await api.getAllUsers(req.body);
         } catch {
