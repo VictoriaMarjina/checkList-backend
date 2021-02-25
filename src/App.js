@@ -3,7 +3,8 @@ const api = require('./restAPI');
 const express = require('express');
 
 class App {
-    constructor() {
+    constructor(db) {
+        this._db = db;
         this._app = express();
         this._app.use(express.json());
         this._app.use(express.static(path.resolve(__dirname, '../dist')));
@@ -24,7 +25,12 @@ class App {
     }
 
     onGetUsers = async (req, res) => {
-        const data = await api.getAllUsers(req.body);
+        const data;
+        try{
+            data = await api.getAllUsers(req.body);
+        } catch {
+            data = this._db.getAllUsers();
+        }
 
         res.json(data);
         res.end();
